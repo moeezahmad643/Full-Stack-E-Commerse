@@ -1,0 +1,12 @@
+.Products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+}
+.Products h1{
+    text-align: center;
+    color: rgb(51, 51, 51);
+}
+

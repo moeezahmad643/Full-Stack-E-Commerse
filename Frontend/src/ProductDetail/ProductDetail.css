@@ -1,0 +1,124 @@
+.ProductDetail {
+  display: flex;
+  padding: 10px;
+  width: 100%;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.ProductDetail .ImgBox {
+  border: 1px solid rgb(214, 214, 214);
+  height: 50w;
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  background-color: #f5f5f5;
+  & img {
+    mix-blend-mode: multiply;
+    object-fit: contain;
+  }
+}
+
+.ProductDetail .DetailBox {
+  width: 49vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
+  & h1 {
+    padding: 5px 0;
+    margin:  5px 0;
+  }
+  .Price {
+    text-transform: capitalize;
+    font-size: xx-large;
+  }
+}
+
+.ProductDetail .DetailBox .List {
+  display: flex;
+  align-items: center;
+  color: #040d18;
+  & ul {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    & li {
+      padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .ProductDetail {
+    width: 100%;
+    padding: 10px;
+  }
+  .ProductDetail .ImgBox {
+    padding: 60px;
+    width: 100vw;
+  }
+  .ProductDetail .DetailBox {
+    width: 100vw;
+    font-size: medium;
+    padding: 15px;
+    .Price {
+      font-size: large;
+      padding: 10px 0;
+    }
+  }
+  .ProductDetail .DetailBox .List ul li {
+    padding: 10px;
+  }
+}
+
+.ProductDescription {
+  padding: 10px;
+  & div {
+    text-indent: 5px;
+    padding: 10px;
+    & h3 {
+      padding: 10px 0;
+    }
+    & p {
+      text-align: justify;
+    }
+  }
+}
+
+.ProductDetail .Buttons {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  gap: 10px;
+  & button {
+    padding: 10px 15px;
+    border-radius: 2px;
+    font-weight: bold;
+    transition: all 0.5s;
+
+    & i {
+      padding: 5px;
+    }
+  }
+  & button:hover {
+    transform: scale(1.1);
+  }
+
+  & button:active {
+    transform: scale(0.8);
+  }
+
+  .BuyNow {
+    background-color: #35579b;
+    border: 1px solid #002f8d;
+    color: white;
+  }
+  .AddToCart {
+    background-color: #ffc233;
+    border: 1px solid #df9c00;
+    color: black;
+  }
+}

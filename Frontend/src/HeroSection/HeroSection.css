@@ -1,0 +1,83 @@
+#HeroSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #e2f3fa;
+  overflow: hidden;
+}
+#HeroSection .text {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-left: 1px solid gray;
+
+  & h1 {
+    font-size: 40px;
+  }
+  & p {
+    text-align: justify;
+    padding: 10px;
+  }
+  & button {
+    width: max-content;
+    padding: 8px 13px;
+    border: none;
+    box-shadow: 0 0 15px 1px rgba(180, 180, 180, 0.498);
+  }
+  & button {
+    box-shadow: 0 0 15px 2px rgba(180, 180, 180, 0.498);
+  }
+}
+#HeroSection .img {
+  width: 300px;
+  position: relative;
+}
+
+img {
+  width: 90%;
+  z-index: 2;
+  position: relative;
+}
+
+@media (max-width: 720px) {
+  #HeroSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #HeroSection .text {
+    width: 90vw;
+  }
+  #HeroSection .img {
+    width: 90%;
+  }
+}
+
+#HeroSection .bubble-1 {
+  padding: 50px;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  z-index: 0;
+  border-radius: 500px;
+  background-color: #0076fb;
+}
+#HeroSection .bubble-2 {
+  padding: 20px;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  z-index: 0;
+  border-radius: 500px;
+  background-color: #FFAC1C;
+  top: 150px;
+  right: 50px ;
+}
+
+
+
+

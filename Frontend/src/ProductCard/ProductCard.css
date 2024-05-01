@@ -1,0 +1,49 @@
+.ProductsCard {
+  width: 20vw;
+  overflow: hidden;
+}
+
+@media (max-width:600px) {
+  .ProductsCard {
+    width: 10rem;
+    } 
+}
+@media (max-width:450px) {
+  .ProductsCard {
+    width: 8rem;
+    } 
+}
+
+.ProductsCard .imageBox {
+  height: 11rem;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgb(243, 243, 243);
+
+}
+.ProductsCard img {
+  mix-blend-mode: multiply;
+  max-width: 100%;
+  object-fit: contain;
+  height: auto;
+  transition: all 0.3s;
+}
+.ProductsCard img:hover{
+    transform:scale(1.1) ;
+}
+.ProductsCard img:active{
+    transform:scale(0.9) ;
+}
+
+.ProductsCard .textBox {
+  padding: 10px;
+}
+
+.ProductsCard h5 {
+  color: rgb(59, 59, 59);
+}
+
+.ProductsCard small {
+  font-weight: bolder;
+}
