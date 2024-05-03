@@ -45,8 +45,12 @@
     display: flex;
     list-style: none;
     flex-wrap: wrap;
+    padding: 10px;
     & li {
-      padding: 20px;
+      transition: all 0.4s;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
     }
   }
 }

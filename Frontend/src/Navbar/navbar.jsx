@@ -65,10 +65,10 @@ export default function Navbar() {
           </ul>
 
           <ul>
-              <Link className="link">
+              <Link className="link" to="/cart">
                 <i className="bi bi-bag-check-fill"></i>
               </Link>
-              <Link className="link">
+              <Link className="link" to="/user">
                 <i className="bi bi-person-circle"></i>
               </Link>
           </ul>

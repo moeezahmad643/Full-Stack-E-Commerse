@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./ProductDetail.css";
 import Loader from "../Loader/Loader";
 import Rating from "@mui/material/Rating";
-import { useLocation } from 'react-router-dom';
-
+import { useLocation } from "react-router-dom";
 
 export default function ProductDetail(props) {
   const { pathname } = useLocation();
-
   const [product, setProduct] = useState(null);
+  const [color, setColor] = useState(null);
+  const [size, setSize] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +20,10 @@ export default function ProductDetail(props) {
           throw new Error("Failed to fetch product");
         }
         const result = await response.json();
-        setProduct(result); // Update the product state with the fetched data
+        setProduct(result);
+        // Update the product state with the fetched data
+        setColor(result.colors[0]);
+        setSize(result.sizes[0]);
       } catch (error) {
         setProduct("Error");
       }
@@ -32,7 +36,17 @@ export default function ProductDetail(props) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  
+  const BuyNow = () => {
+    console.log("hello I am Buy Now");
+  };
+  const AddToCart = () => {
+    props.setProductForCart({
+      id: props.productId,
+      color: color,
+      size: size,
+    });
+  };
+
   if (product === "Error")
     return (
       <center style={{ margin: "140px", color: "#000000" }}>
@@ -57,7 +71,17 @@ export default function ProductDetail(props) {
             <h3>COLOR</h3>
             <ul>
               {product.colors.map((element) => (
-                <li key={element}>{element}</li>
+                <li
+                  style={
+                    color == element
+                      ? { background: "black", color: "white" }
+                      : { color: "black" }
+                  }
+                  onClick={() => setColor(element)}
+                  key={element}
+                >
+                  {element}
+                </li>
               ))}
             </ul>
           </span>
@@ -66,16 +90,26 @@ export default function ProductDetail(props) {
             <h3>SIZE</h3>
             <ul>
               {product.sizes.map((element) => (
-                <li key={element}>{element}</li>
+                <li
+                  style={
+                    size == element
+                      ? { background: "black", color: "white" }
+                      : { color: "black" }
+                  }
+                  onClick={() => setSize(element)}
+                  key={element}
+                >
+                  {element}
+                </li>
               ))}
             </ul>
           </span>
           <hr />
           <div className="Buttons">
-            <button className="BuyNow">
+            <button className="BuyNow" onClick={BuyNow}>
               <i className="bi bi-bag-check"></i>Buy Now
             </button>
-            <button className="AddToCart">
+            <button className="AddToCart" onClick={AddToCart}>
               <i className="bi bi-cart"></i>Add To Cart
             </button>
           </div>
