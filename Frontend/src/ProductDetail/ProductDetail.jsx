@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./ProductDetail.css";
 import Loader from "../Loader/Loader";
 import Rating from "@mui/material/Rating";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ProductDetail(props) {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [product, setProduct] = useState(null);
   const [color, setColor] = useState(null);
@@ -39,12 +42,28 @@ export default function ProductDetail(props) {
   const BuyNow = () => {
     console.log("hello I am Buy Now");
   };
-  const AddToCart = () => {
-    props.setProductForCart({
-      id: props.productId,
-      color: color,
-      size: size,
-    });
+  const AddToCart = async () => {
+    let user = JSON.parse(localStorage.getItem("user")) || null;
+    if (user) {
+      console.log(user.email);
+      let product = {
+        id: props.productId,
+        color: color,
+        size: size,
+      };
+      let responce = await axios.post("http://localhost:3000/cart", {
+        product,
+        email: user.email,
+      });
+
+      console.log(responce.data);
+
+      if(responce.data.result=='ok'){
+        toast('✔️ Data enterd In the cart Successfully')
+      }
+    } else {
+      navigate("/cart");
+    }
   };
 
   if (product === "Error")
@@ -58,6 +77,7 @@ export default function ProductDetail(props) {
   return (
     <>
       <section className="ProductDetail">
+        <Toaster/>
         <div className="ImgBox">
           <img src={product.image} alt={product.title} />
         </div>

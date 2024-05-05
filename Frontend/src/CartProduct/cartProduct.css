@@ -1,0 +1,151 @@
+.cartProduct {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  & > div {
+    width: auto;
+  }
+}
+
+.firstBox {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 50vw !important;
+
+}
+
+ .secondBox{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50vw !important;
+}
+
+@media (max-width: 650px) {
+    .cartProduct {
+        flex-wrap: wrap;
+    }
+    .firstBox {
+        width: 100% !important;
+        justify-content: start;
+    }
+    
+    .secondBox{
+        width: 100% !important;
+        justify-content: space-between;
+    }
+}
+
+
+.cartProduct .description {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  & button {
+    padding: 10px 20px;
+    color: white;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cartProduct .description {
+    padding: 5px;
+  }
+}
+
+.cartProduct .quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & button {
+    border: none;
+    background-color: rgb(218, 218, 218);
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    display: grid;
+    place-content: center;
+    font-size: 20px;
+  }
+  & input {
+    width: 50px;
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    outline: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cartProduct .quantity {
+    & button {
+      padding: 15px;
+      width: 20px;
+      height: 20px;
+      font-size: 15px;
+    }
+    & input {
+      width: 30px;
+      padding: 5px;
+      font-size: 15px;
+    }
+      }
+}
+
+.cartProduct .imgBox {
+  padding: 10px;
+  background-color: rgb(248, 248, 248);
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1 / 1;
+}
+.cartProduct img {
+  width: 80px;
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 600px) {
+    .cartProduct .imgBox {
+      padding: 10px;
+    }
+    .cartProduct img {
+        width: 50px;
+    }
+  }
+
+.cartProduct .detail {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+
+  & .Link {
+    font-size: small;
+  }
+  .view {
+    color: #2797ff;
+  }
+  .remove {
+    color: #ff474a;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .bi{
+    font-size: large    ;
+  }
+}

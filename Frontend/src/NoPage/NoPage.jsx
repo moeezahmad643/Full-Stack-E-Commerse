@@ -1,5 +1,5 @@
 import React from 'react'
-import './css/NoPage.css'
+import './NoPage.css'
 export default function NoPage() {
   return (
     <section id='NoPage'>

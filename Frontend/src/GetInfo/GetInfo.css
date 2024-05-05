@@ -1,0 +1,105 @@
+.SignupForm,
+.loginForm {
+  display: grid;
+  place-items: center;
+  height: 80vh;
+  width: 100vw;
+  overflow: hidden;
+
+  & h1 {
+    font-size: 30px;
+    padding: 0;
+    margin: 10px;
+  }
+  .miniButton {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    & p {
+      color: rgb(93, 93, 93);
+    }
+  }
+  .wrongAlert {
+    color: red;
+    font-style: italic;
+  }
+  .bi {
+    cursor: pointer;
+  }
+}
+
+.loginForm .bubble,
+.SignupForm .bubble {
+  padding: 6rem;
+  border-radius: 100px;
+  position: absolute;
+  background-color: blue;
+  z-index: -1;
+  top: 100px;
+  left: 10%;
+}
+.loginForm .bubble2,
+.SignupForm .bubble2 {
+  padding: 70px;
+  border-radius: 100px;
+  position: absolute;
+  background-color: #ffac1c;
+  z-index: -1;
+  top: 400px;
+  left: 55%;
+}
+.SignupForm form,
+.loginForm form {
+  background-color: rgba(255, 255, 255, 0.589);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 15px;
+  align-items: center;
+  min-width: 300px;
+  width: 60%;
+  box-shadow: 0px 5px 15px 5px rgba(152, 152, 152, 0.141);
+}
+
+.SignupForm form input,
+.loginForm form input {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 100%;
+  box-shadow: 0px 5px 15px 5px rgba(152, 152, 152, 0.141);
+}
+
+.SignupForm form .paswordBox,
+.loginForm form .paswordBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  & input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  .bi {
+    padding: 5px 10px;
+  }
+}
+.SignupForm form button,
+.loginForm form button {
+  background-color: #115dfc;
+  width: 100%;
+  color: white;
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 5px 15px 5px rgba(152, 152, 152, 0.141);
+  border-radius: 5px;
+  margin: 15px;
+}
+.SignupForm form button:hover,
+.loginForm form button:hover {
+  background-color: #0553fc;
+}

@@ -1,57 +1,56 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
-const fs = require('fs')
+const fs = require("fs");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-let db = new sqlite3.Database("../products.db", (err) => {
-  if (err) return console.error(err.message);
-  console.log("Connected to the in-memory SQlite database.");
+mongoose
+  .connect("mongodb://localhost:27017/Ecommerse4u", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected Successfully");
+  })
+  .catch((err) => console.log(err));
+
+const usersSchema = mongoose.Schema({
+  username: String,
+  userEmail: String,
+  password: String,
 });
 
-const createProducts = `
-CREATE TABLE IF NOT EXISTS products (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-name TEXT,
-description TEXT,
-image TEXT,
-price TEXT,
-quantity TEXT
-)
-`;
+const User = mongoose.model("User", usersSchema);
 
-const createUsers = `
-CREATE TABLE IF NOT EXISTS user (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-name TEXT,
-email TEXT UNIQUE,
-password TEXT
-)
-`;
-
-// Run the SQL query to create the table
-db.serialize(() => {
-  db.run(createProducts, (err) => {
-    if (err) {
-      console.error("Error creating table:", err.message);
-    } else {
-      console.log("Table Products created successfully");
-    }
-  });
-  db.run(createUsers, (err) => {
-    if (err) {
-      console.error("Error creating table:", err.message);
-    } else {
-      console.log("Table Users created successfully");
-    }
-  });
+const cartSchema = mongoose.Schema({
+  email: String,
+  products: Array,
 });
 
-app.get("/products", (req, res) => {
-  res.json(JSON.parse(fs.readFileSync('./Products.json','utf-8')));
+const Cart = mongoose.model("Cart", cartSchema);
+
+const productSchema = mongoose.Schema({
+  id: Number,
+  title: String,
+  price: Number,
+  description: String,
+  category: String,
+  image: String,
+  rating: Object,
+  sizes: Array,
+  colors: Array,
+});
+const Products = mongoose.model("Product", productSchema);
+
+app.get("/products", async (req, res) => {
+  let products = await Products.find({});
+  res.json(products);
 });
 
 app.get("/products/:product", (req, res) => {
@@ -252,6 +251,123 @@ app.get("/products/:product", (req, res) => {
   }
 
   res.json(product);
+});
+
+app.post("/cart", async (req, res) => {
+  let newProducts = req.body.product; // object
+  let email = req.body.email; // string
+
+  let cart = await Cart.findOne({ email: email });
+  if (cart) {
+    cart.products.push(newProducts);
+    await cart.save();
+    res.json({ result: `ok` });
+  } else {
+    console.log("No Products Found");
+    cart = new Cart({
+      email: email,
+      products: [newProducts], // Initialize the products array with the new product
+    });
+
+    res.json({ result: `ok` });
+    await cart.save();
+  }
+});
+app.get("/cart", async (req, res) => {
+  try {
+    let email = req.query.email;
+    let response = await Cart.find({ email: email });
+
+    if (!response || response.length === 0) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    const uniqueProducts = [];
+    response[0].products.forEach((element) => {
+      const exists = uniqueProducts.some(
+        (prod) =>
+          prod.id === element.id &&
+          prod.color === element.color &&
+          prod.size === element.size
+      );
+
+      if (!exists) {
+        uniqueProducts.push({
+          id: element.id,
+          color: element.color,
+          size: element.size,
+          quantity: 1,
+        });
+      } else {
+        const existingProduct = uniqueProducts.find(
+          (prod) =>
+            prod.id === element.id &&
+            prod.color === element.color &&
+            prod.size === element.size
+        );
+        existingProduct.quantity++;
+      }
+    });
+    console.log(uniqueProducts);
+    res.json(uniqueProducts);
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/users", async (req, res) => {
+  let userData = await User.find({});
+  res.json(userData);
+});
+
+app.post("/removeProducts", async (req, res) => {
+  console.log(req.body);
+  let data = await Cart.updateOne(
+    { email: req.body.email }, // Match document with the provided email
+    { $pull: { products: { id: req.body.id } } } // Pull the object from the 'products' array where 'id' matches
+);
+  res.json({ res: "ok" });
+});
+app.post("/login", async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  console.log(email, password);
+
+  let responce = await User.findOne({ userEmail: email, password: password });
+  if (responce) {
+    res.json({
+      result: "ok",
+      userId: responce._id,
+      username: responce.username,
+      userEmail: responce.userEmail,
+    });
+  } else {
+    res.json({ result: "Error" });
+  }
+});
+
+app.post("/signup", async (req, res) => {
+  let name = req.body.username;
+  let email = req.body.email;
+  let password = req.body.password;
+
+  console.log(name, email, password);
+
+  let oldUser = await User.findOne({ userEmail: email });
+  console.log(oldUser?.userEmail, email);
+  if (oldUser?.userEmail == email) {
+    res.json({ result: "Email already Exist" });
+  } else {
+    const newUser = new User({
+      username: name,
+      userEmail: email,
+      password: password,
+    });
+
+    newUser.save();
+    res.json({ result: "ok" });
+  }
 });
 
 app.listen(port, () => {

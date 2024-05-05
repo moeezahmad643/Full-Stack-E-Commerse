@@ -1,0 +1,32 @@
+.userProfile {
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  .userProfile h1 {
+    margin: 5px;
+    padding: 5px;
+  }
+  
+  .userProfile > button {
+      padding: 10px 20px;
+      background-color: rgb(255, 45, 45);
+      color: white;
+      font-size: 17px;
+      border: 1px solid red;
+      border-radius: 5px;
+  }
+  
+  .userProfile> button:hover {
+      background-color: rgb(255, 30, 30);
+  }
+
+
+  .userProfile .totalbar{
+
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+    font-size: larger;
+    font-weight: bold;
+  }
